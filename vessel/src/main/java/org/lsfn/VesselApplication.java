@@ -7,6 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class VesselApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(LsfnApplication.class, args);
+		SpringApplication.run(VesselApplication.class, args);
 	}
 }
