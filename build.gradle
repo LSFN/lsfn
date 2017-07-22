@@ -10,7 +10,10 @@ buildscript {
     }
 }
 
-subprojects {
+// Our Java based apps have a set of shared configuration
+def javaApps = [project(':environment'), project(':vessel')]
+
+configure(javaApps) {
     apply plugin: 'java'
     apply plugin: 'groovy'
     apply plugin: 'org.springframework.boot'
