@@ -1,7 +1,7 @@
 syntax = "proto3";
-package org.lsfn;
+package org.lsfn.proto.envVessel;
 
-import "shipInput.proto";
+import "org/lsfn/proto/envVessel/shipInput.proto";
 
 message Position {
     double x = 1;
