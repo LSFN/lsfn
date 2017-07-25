@@ -11,3 +11,10 @@ repositories {
 dependencies {
     compile 'com.google.protobuf:protobuf-java:3.3.0'
 }
+
+protobuf {
+    protoc {
+        // The artifact spec for the Protobuf Compiler
+        artifact = 'com.google.protobuf:protoc:3.3.0'
+    }
+}
