@@ -1,0 +1,6 @@
+dependencies {
+    //compile project(':env-vessel-proto')
+    compile files(fileTree(dir: project(':env-vessel-proto').buildDir, include: '**/*.jar').files)
+}
+
+println files(fileTree(dir: project(':env-vessel-proto').buildDir, include: '**/*.jar').files)
