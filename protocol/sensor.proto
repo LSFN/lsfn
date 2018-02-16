@@ -7,7 +7,7 @@ message SensorDescription {
     string id = 1;
     string name = 2;
     // This gives the difference between a control that is boolean, one that's an int, and one that's a float.
-    enum ControlType {
+    enum SensorType {
         // Galactic Coordinates defined as a position in the Galaxy.
         GalacticCoordinates = 0;
         // Radar
@@ -15,7 +15,7 @@ message SensorDescription {
         // Identify-Friend-Foe Detector
         IFFScanner = 2;
     }
-    ControlType type = 3;
+    SensorType sensorType = 3;
 
     // I don't have a good way of specifying conditional fields, so I guess I'll do it by convention.
 

@@ -23,7 +23,7 @@ message ControlDescription {
         // Throttle: It's a sliding value within a defined range (see below)
         Throttle = 2;
     }
-    ControlType type = 3;
+    ControlType controlType = 3;
     // I don't have a good way of specifying conditional fields, so I guess I'll do it by convention.
 
     // Only given for Throttle types
