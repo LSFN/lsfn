@@ -1,11 +1,24 @@
 extern crate tokio;
 extern crate tokio_io;
 extern crate futures;
+extern crate bytes;
+extern crate prost;
+#[macro_use]
+extern crate prost_derive;
+extern crate uuid;
 
 use tokio::executor::current_thread;
 use tokio::net::TcpListener;
 use tokio_io::io;
 use futures::{Future, Stream};
+use prost::Message;
+use uuid::Uuid;
+
+pub mod lsfn_api {
+    include!(concat!(env!("OUT_DIR"), "/lsfn.protocol.rs"));
+}
+
+use lsfn_api::{Welcome, ShipDescription};
 
 fn main() {
     let addr = "127.0.0.1:6142".parse().unwrap();
@@ -14,8 +27,16 @@ fn main() {
     let server = listener.incoming().for_each(|socket| {
         println!("accepted socket; addr={:?}", socket.peer_addr().unwrap());
 
+        let ship = Welcome { ship: Some(ShipDescription {
+            id: Uuid::new_v4().to_string(),
+            name: "HMS Edge of Reason".to_string(),
+            controls: vec![],
+            sensors: vec![],
+        }) };
 
-        let connection = io::write_all(socket, "hello world\n")
+        let mut ship_message = vec![];
+        ship.encode(&mut ship_message)?;
+        let connection = io::write_all(socket, ship_message)
             .then(|res| {
                 println!("wrote message; success={:?}", res.is_ok());
                 Ok(())

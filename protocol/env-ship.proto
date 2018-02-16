@@ -1,0 +1,11 @@
+syntax = "proto3";
+package lsfn.protocol;
+
+import "protocol/ship.proto";
+
+message JoinServer {
+}
+
+message Welcome {
+    ShipDescription ship = 1;
+}
