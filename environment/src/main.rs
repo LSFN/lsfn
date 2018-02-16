@@ -14,11 +14,12 @@ use futures::{Future, Stream};
 use prost::Message;
 use uuid::Uuid;
 
+use lsfn_api::{Welcome, ShipDescription, ControlDescription};
+use lsfn_api::control_description::ControlType;
+
 pub mod lsfn_api {
     include!(concat!(env!("OUT_DIR"), "/lsfn.protocol.rs"));
 }
-
-use lsfn_api::{Welcome, ShipDescription};
 
 fn main() {
     let addr = "127.0.0.1:6142".parse().unwrap();
@@ -27,7 +28,12 @@ fn main() {
     let ship = Welcome { ship: Some(ShipDescription {
         id: Uuid::new_v4().to_string(),
         name: "HMS Edge of Reason".to_string(),
-        controls: vec![],
+        controls: vec![ ControlDescription {
+            id: Uuid::new_v4().to_string(),
+            name: "Thruster".to_string(),
+            control_type: i32::from(ControlType::Trigger),
+            throttle_range: None,
+        } ],
         sensors: vec![],
     }) };
 
