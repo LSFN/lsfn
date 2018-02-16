@@ -14,8 +14,9 @@ use futures::{Future, Stream};
 use prost::Message;
 use uuid::Uuid;
 
-use lsfn_api::{Welcome, ShipDescription, ControlDescription};
+use lsfn_api::{Welcome, ShipDescription, ControlDescription, SensorDescription};
 use lsfn_api::control_description::ControlType;
+use lsfn_api::sensor_description::SensorType;
 
 pub mod lsfn_api {
     include!(concat!(env!("OUT_DIR"), "/lsfn.protocol.rs"));
@@ -34,7 +35,13 @@ fn main() {
             control_type: i32::from(ControlType::Trigger),
             throttle_range: None,
         } ],
-        sensors: vec![],
+        sensors: vec![ SensorDescription {
+            id: Uuid::new_v4().to_string(),
+            name: "Galacic Position System".to_string(),
+            sensor_type: i32::from(SensorType::GalacticCoordinates),
+            radar_range: None,
+            iff_detector_range: None,
+        }],
     }) };
 
     let server = listener.incoming().for_each(move |socket| {
