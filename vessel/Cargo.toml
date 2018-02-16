@@ -4,7 +4,7 @@ version = "0.1.0"
 authors = ["James Laverack <james@jameslaverack.com>"]
 
 [dependencies]
-glutin = "*"
+glium = "*"
+glium_text = "*"
+cgmath = "*"
 gl = "*"
-
-

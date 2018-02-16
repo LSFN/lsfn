@@ -1,43 +1,48 @@
-extern crate gl;
-extern crate glutin;
+extern crate glium;
+extern crate glium_text;
+extern crate cgmath;
 
-use glutin::GlContext;
+use std::thread;
+use std::time::Duration;
+use glium::Surface;
+use glium::glutin;
 
 fn main() {
-    let mut events_loop = glutin::EventsLoop::new();
-    let window = glutin::WindowBuilder::new()
-        .with_title("Hello, world!")
-        .with_dimensions(1024, 768);
-    let context = glutin::ContextBuilder::new()
-        .with_vsync(true);
-    let gl_window = glutin::GlWindow::new(window, context, &events_loop).unwrap();
+    use glium::DisplayBuild;
 
-    unsafe {
-        gl_window.make_current().unwrap();
-    }
+    let display = glutin::WindowBuilder::new().with_dimensions(1024, 768).build_glium().unwrap();
+    let system = glium_text::TextSystem::new(&display);
 
-    unsafe {
-        gl::load_with(|symbol| gl_window.get_proc_address(symbol) as *const _);
-        gl::ClearColor(0.0, 1.0, 0.0, 1.0);
-    }
+    let font = glium_text::FontTexture::new(&display, &include_bytes!("font/ldr_3/ldr3.ttf")[..], 70).unwrap();
 
-    let mut running = true;
-    while running {
-        events_loop.poll_events(|event| {
+    let text = glium_text::TextDisplay::new(&system, &font, "Hello world!");
+    let text_width = text.get_width();
+    println!("Text width: {:?}", text_width);
+
+    let sleep_duration = Duration::from_millis(17);
+
+    'main: loop {
+        let (w, h) = display.get_framebuffer_dimensions();
+
+        let matrix:[[f32; 4]; 4] = cgmath::Matrix4::new(
+            2.0 / text_width, 0.0, 0.0, 0.0,
+            0.0, 2.0 * (w as f32) / (h as f32) / text_width, 0.0, 0.0,
+            0.0, 0.0, 1.0, 0.0,
+            -1.0, -1.0, 0.0, 1.0f32,
+        ).into();
+
+        let mut target = display.draw();
+        target.clear_color(0.0, 0.0, 0.0, 1.0);
+        glium_text::draw(&text, &system, &mut target, matrix, (1.0, 1.0, 0.0, 1.0));
+        target.finish().unwrap();
+
+        thread::sleep(sleep_duration);
+
+        for event in display.poll_events() {
             match event {
-                glutin::Event::WindowEvent{ event, .. } => match event {
-                    glutin::WindowEvent::Closed => running = false,
-                    glutin::WindowEvent::Resized(w, h) => gl_window.resize(w, h),
-                    _ => ()
-                },
+                glutin::Event::Closed => break 'main,
                 _ => ()
             }
-        });
-
-        unsafe {
-            gl::Clear(gl::COLOR_BUFFER_BIT);
         }
-
-        gl_window.swap_buffers().unwrap();
     }
 }
