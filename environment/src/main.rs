@@ -24,15 +24,15 @@ fn main() {
     let addr = "127.0.0.1:6142".parse().unwrap();
     let listener = TcpListener::bind(&addr).unwrap();
 
-    let server = listener.incoming().for_each(|socket| {
-        println!("accepted socket; addr={:?}", socket.peer_addr().unwrap());
+    let ship = Welcome { ship: Some(ShipDescription {
+        id: Uuid::new_v4().to_string(),
+        name: "HMS Edge of Reason".to_string(),
+        controls: vec![],
+        sensors: vec![],
+    }) };
 
-        let ship = Welcome { ship: Some(ShipDescription {
-            id: Uuid::new_v4().to_string(),
-            name: "HMS Edge of Reason".to_string(),
-            controls: vec![],
-            sensors: vec![],
-        }) };
+    let server = listener.incoming().for_each(move |socket| {
+        println!("accepted socket; addr={:?}", socket.peer_addr().unwrap());
 
         let mut ship_message = vec![];
         ship.encode(&mut ship_message)?;
