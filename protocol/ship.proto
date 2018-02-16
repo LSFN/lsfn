@@ -1,0 +1,12 @@
+syntax = "proto3";
+package lsfn.protocol;
+
+import "protocol/control.proto";
+import "protocol/sensor.proto";
+
+message ShipDescription {
+    string id = 1;
+    string name = 2;
+    repeated ControlDescription controls = 3;
+    repeated SensorDescription sensors = 4;
+}

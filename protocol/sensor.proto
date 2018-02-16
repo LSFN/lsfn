@@ -1,0 +1,88 @@
+syntax = "proto3";
+package lsfn.protocol;
+
+// Describe a Sensor. Sensors are things that the ship knows. For example it's galactic position is a sensor, radar is a
+// sensor. Sensors aren't changed, only described.
+message SensorDescription {
+    string id = 1;
+    string name = 2;
+    // This gives the difference between a control that is boolean, one that's an int, and one that's a float.
+    enum ControlType {
+        // Galactic Coordinates defined as a position in the Galaxy.
+        GalacticCoordinates = 0;
+        // Radar
+        VolumetricRadar = 1;
+        // Identify-Friend-Foe Detector
+        IFFScanner = 2;
+    }
+    ControlType type = 3;
+
+    // I don't have a good way of specifying conditional fields, so I guess I'll do it by convention.
+
+    // Only provided for Volumetric Radar type
+    VolumetricRange radarRange = 4;
+
+    // Only provided for IFF Detector type
+    VolumetricRange iffDetectorRange = 5;
+}
+
+message GalacticCoordinate {
+    // Okay we're totally cheating here and using X, Y, and Z. This should be more
+    // complex. https://en.wikipedia.org/wiki/Galactic_coordinate_system Regardless, these are *global* coordinates and
+    // are not relative to the ship like the IFF and Radar coordinates are.
+    double x = 1;
+    double y = 2;
+    double z = 3;
+}
+
+message ShipRelativeCoordinate {
+    // XYZ coordinate centered on the ship at `(0, 0, 0)`. Scale the same as volumetric data.
+    double x = 1;
+    double y = 2;
+    double z = 3;
+}
+
+message IFFPing {
+    ShipRelativeCoordinate location = 1;
+    string name = 2;
+}
+
+message IFFReadout {
+    repeated IFFPing pings = 1;
+}
+
+message VolumetricRange {
+    // This is a little complex as the volumentric data is just given as a 3D array. So this gives you the offests to
+    // figure out where the ship is in that (as it's centered on the ship). So if `upY` is 20 and `downY` is 40 then you
+    // expect a y dimention in the volumetric data of size 60, where the ship is 20 from the top.
+    int32 leftX = 1;
+    int32 rightX = 2;
+    int32 upY = 3;
+    int32 downY = 4;
+    int32 forwardsZ = 5;
+    int32 backwardsZ = 6;
+}
+
+message VolumetricData {
+    // Okay three dimentional volumetric data is hard okay! Each cell is a float that describes the intensity of the
+    // thinig in that cell from 0.0f to 1.0f.
+    message plane {
+        message line {
+            repeated float cell = 1;
+        }
+        repeated line lines = 1;
+    }
+    repeated plane palnes = 1;
+}
+
+
+// Describe the state of a Sensor. This is a message sent from the environment to the vessel to describe the current
+// state.
+message SensorState {
+    string id = 1;
+    oneof SensorTypeValue {
+        GalacticCoordinate galacticCoordinate = 2;
+        VolumetricData radarData = 3;
+        IFFReadout iffData = 4;
+    }
+}
