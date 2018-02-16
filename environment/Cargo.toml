@@ -4,3 +4,6 @@ version = "0.1.0"
 authors = ["James Laverack <james@jameslaverack.com>"]
 
 [dependencies]
+tokio = "0.1"
+tokio-io = "0.1"
+futures = "0.1"
