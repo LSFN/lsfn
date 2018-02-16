@@ -8,8 +8,8 @@ root = true
 end_of_line = lf
 insert_final_newline = true
 
-# Java
-[*.{java,groovy,gradle,proto}]
+# Protobuf
+[*.proto]
 charset = utf-8
 indent_style = space
 indent_size = 4
