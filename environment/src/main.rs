@@ -37,7 +37,7 @@ fn main() {
         } ],
         sensors: vec![ SensorDescription {
             id: Uuid::new_v4().to_string(),
-            name: "Galacic Position System".to_string(),
+            name: "Galactic Position System".to_string(),
             sensor_type: i32::from(SensorType::GalacticCoordinates),
             radar_range: None,
             iff_detector_range: None,
