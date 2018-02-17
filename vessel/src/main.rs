@@ -1,21 +1,52 @@
 extern crate glium;
 extern crate glium_text;
 extern crate cgmath;
+extern crate bytes;
+extern crate prost;
+#[macro_use]
+extern crate prost_derive;
 
 use std::thread;
 use std::time::Duration;
+use bytes::Buf;
+use std::io::Cursor;
 use glium::Surface;
 use glium::glutin;
+use prost::Message;
+use lsfn_api::{Welcome, ShipDescription, ControlDescription, SensorDescription};
+use lsfn_api::control_description::ControlType;
+use lsfn_api::sensor_description::SensorType;
+
+pub mod lsfn_api {
+    include!(concat!(env!("OUT_DIR"), "/lsfn.protocol.rs"));
+}
+
+use std::io::prelude::*;
+use std::net::TcpStream;
+
 
 fn main() {
+
+    let mut stream = TcpStream::connect("127.0.0.1:6142").unwrap();
+
+    let mut buf = [0; 512];
+    let num = stream.read(&mut buf).unwrap();
+
+    println!("Read {:?} bytes", num);
+    println!("Raw: {:?}", buf.to_vec());
+
+    let w = Welcome::decode(&buf[0..num].to_vec()).expect("Failed to reach server");
+
+    println!("Response: {:?}", w);
+
     use glium::DisplayBuild;
 
     let display = glutin::WindowBuilder::new().with_dimensions(1024, 768).build_glium().unwrap();
     let system = glium_text::TextSystem::new(&display);
 
-    let font = glium_text::FontTexture::new(&display, &include_bytes!("font/ldr_3/ldr3.ttf")[..], 70).unwrap();
+    let font = glium_text::FontTexture::new(&display, &include_bytes!("font/mainframe/mainframe-opto.ttf")[..], 70).unwrap();
 
-    let text = glium_text::TextDisplay::new(&system, &font, "Hello world!");
+    let text = glium_text::TextDisplay::new(&system, &font, &w.ship.unwrap().name);
     let text_width = text.get_width();
     println!("Text width: {:?}", text_width);
 
