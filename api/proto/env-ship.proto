@@ -1,5 +1,5 @@
 syntax = "proto3";
-package lsfn.protocol;
+package lsfn;
 
 import "protocol/ship.proto";
 

@@ -1,8 +1,8 @@
 syntax = "proto3";
-package lsfn.protocol;
+package lsfn;
 
-import "protocol/control.proto";
-import "protocol/sensor.proto";
+import "api/proto/control.proto";
+import "api/proto/sensor.proto";
 
 message ShipDescription {
     string id = 1;

@@ -1,5 +1,5 @@
 syntax = "proto3";
-package lsfn.protocol;
+package lsfn;
 
 message ThrottleRange {
     // The range of a throttle. These are ints, so you can safely do `(maximum - minimum) / step` to get the number of

@@ -1,5 +1,5 @@
 syntax = "proto3";
-package lsfn.protocol;
+package lsfn;
 
 // Describe a Sensor. Sensors are things that the ship knows. For example it's galactic position is a sensor, radar is a
 // sensor. Sensors aren't changed, only described.
