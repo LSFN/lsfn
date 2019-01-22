@@ -2,51 +2,51 @@ syntax = "proto3";
 package lsfn;
 
 message ThrottleRange {
-    // The range of a throttle. These are ints, so you can safely do `(maximum - minimum) / step` to get the number of
-    // steps. It's safe to assume that `minimum < maximum` and `step > 0`.
-    int32 minimum = 1;
-    int32 maximum = 2;
-    int32 step = 3;
+  // The range of a throttle. These are ints, so you can safely do `(maximum - minimum) / step` to get the number of
+  // steps. It's safe to assume that `minimum < maximum` and `step > 0`.
+  int32 minimum = 1;
+  int32 maximum = 2;
+  int32 step = 3;
 }
 
 // Describe a Control. Controls are things that the ship can do. For example firing lasers is a control, firing
 // thrusters is a control, and throttling engines is a control.
 message ControlDescription {
-    string id = 1;
-    string name = 2;
-    // This gives the difference between a control that is boolean, one that's an int, and one that's a float.
-    enum ControlType {
-        // Toggle: It's on or off, but when toggled it stays in it's on/off position until toggled again.
-        Toggle = 0;
-        // Trigger: It's something that happens every time you trigger it then stops until triggered again.
-        Trigger = 1;
-        // Throttle: It's a sliding value within a defined range (see below)
-        Throttle = 2;
-    }
-    ControlType controlType = 3;
-    // I don't have a good way of specifying conditional fields, so I guess I'll do it by convention.
+  string id = 1;
+  string name = 2;
+  // This gives the difference between a control that is boolean, one that's an int, and one that's a float.
+  enum ControlType {
+    // Toggle: It's on or off, but when toggled it stays in it's on/off position until toggled again.
+    Toggle = 0;
+    // Trigger: It's something that happens every time you trigger it then stops until triggered again.
+    Trigger = 1;
+    // Throttle: It's a sliding value within a defined range (see below)
+    Throttle = 2;
+  }
+  ControlType controlType = 3;
+  // I don't have a good way of specifying conditional fields, so I guess I'll do it by convention.
 
-    // Only given for Throttle types
-    ThrottleRange throttleRange = 4;
+  // Only given for Throttle types
+  ThrottleRange throttleRange = 4;
 }
 
 // Describe the state of a control. This is a message sent from the environment to the vessel to describe the current
 // state.
 message ControlState {
-    string id = 1;
-    oneof ControlTypeValue {
-        // We've only got toggle and throttle here as you don't get the state of a trigger
-        bool toggle = 2;
-        int32 throttle = 3;
-    }
+  string id = 1;
+  oneof ControlTypeValue {
+    // We've only got toggle and throttle here as you don't get the state of a trigger
+    bool toggle = 2;
+    int32 throttle = 3;
+  }
 }
 
 // Strutually this message is the same as ControlState, but semanticall it describes the changing of a control (as
 // requested by the vessel) and not the description of it's state.
 message ChangeControl {
-    string id = 1;
-    oneof ControlTypeValue {
-        bool toggle = 2;
-        int32 throttle = 3;
-    }
+  string id = 1;
+  oneof ControlTypeValue {
+    bool toggle = 2;
+    int32 throttle = 3;
+  }
 }

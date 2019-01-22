@@ -7,7 +7,7 @@ message JoinServer {
 }
 
 message Welcome {
-    ShipDescription ship = 1;
+  ShipDescription ship = 1;
 }
 
 service Lobby {

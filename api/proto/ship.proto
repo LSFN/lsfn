@@ -5,8 +5,8 @@ import "api/proto/control.proto";
 import "api/proto/sensor.proto";
 
 message ShipDescription {
-    string id = 1;
-    string name = 2;
-    repeated ControlDescription controls = 3;
-    repeated SensorDescription sensors = 4;
+  string id = 1;
+  string name = 2;
+  repeated ControlDescription controls = 3;
+  repeated SensorDescription sensors = 4;
 }
