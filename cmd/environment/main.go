@@ -22,6 +22,7 @@ func (s *server) Join(ctx context.Context, in *pb.JoinServer) (*pb.Welcome, erro
 }
 
 func main() {
+	log.Printf("Staring server on %v", port)
 	lis, err := net.Listen("tcp", port)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
