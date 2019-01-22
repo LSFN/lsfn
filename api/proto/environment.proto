@@ -1,7 +1,7 @@
 syntax = "proto3";
 package lsfn;
 
-import "protocol/ship.proto";
+import "api/proto/ship.proto";
 
 message JoinServer {
 }
