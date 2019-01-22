@@ -9,3 +9,7 @@ message JoinServer {
 message Welcome {
     ShipDescription ship = 1;
 }
+
+service Lobby {
+  rpc Join (JoinServer) returns (Welcome) {}
+}
