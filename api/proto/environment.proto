@@ -4,12 +4,16 @@ package lsfn;
 import "api/proto/ship.proto";
 
 message JoinServer {
+  // No authentication yet, just say the ID of the ship you're joining as.
+  string shipId = 1;
 }
 
 message Welcome {
+  // You get back a description of your ship.
   ShipDescription ship = 1;
 }
 
 service Lobby {
   rpc Join (JoinServer) returns (Welcome) {}
+  rpc Command (stream ShipCommand) returns (stream ShipUpdate) {}
 }

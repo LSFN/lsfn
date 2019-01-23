@@ -1,6 +1,7 @@
 package main
 
 import (
+	"io"
 	"time"
 	"context"
 	"log"
@@ -37,4 +38,27 @@ func main() {
 		log.Fatalf("could not join server: %v", err)
 	}
 	log.Printf("Joined server, assinged ship %s", r.Ship.Name)
+
+	stream, err := c.Command(context.Background())
+	if err != nil {
+		log.Fatalf("Failed to connect to server : %v", err)
+	}
+	waitc := make(chan struct{})
+	go func() {
+		for {
+			in, err := stream.Recv()
+			if err == io.EOF {
+				// read done.
+				log.Printf("Got EOF from server, closing connection")
+				close(waitc)
+				return
+			}
+			if err != nil {
+				log.Fatalf("Failed to receive a message : %v", err)
+			}
+			log.Printf("Got update %v", in)
+		}
+	}()
+	stream.CloseSend()
+	<-waitc
 }

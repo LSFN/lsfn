@@ -4,6 +4,17 @@ package lsfn;
 import "api/proto/control.proto";
 import "api/proto/sensor.proto";
 
+message ShipUpdate {
+  oneof Union {
+    ControlState control = 1;
+    SensorState sensor = 2;
+  }
+}
+
+message ShipCommand {
+  ChangeControl control = 1;
+}
+
 message ShipDescription {
   string id = 1;
   string name = 2;
