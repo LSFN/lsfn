@@ -1,6 +1,7 @@
 package main
 
 import (
+	"io"
 	"net"
 	"context"
 	"log"
@@ -23,35 +24,25 @@ func (s *server) Join(ctx context.Context, in *pb.JoinServer) (*pb.Welcome, erro
 }
 
 func (s *server) Command(stream pb.Lobby_CommandServer) error {
+	log.Print("Bidirectional stream opened to command ship")
 	if err := stream.Send(&pb.ShipUpdate{Union: &pb.ShipUpdate_Control{Control: &pb.ControlState{Id: "0", ControlTypeValue: &pb.ControlState_Toggle{Toggle: true}}}}); err != nil {
+		log.Printf("Failed to send ship update %v", err)
 		return err
 	}
 	
-// 	for {
-// 		in, err := stream.Recv()
-// 		if err == io.EOF {
-// 			return nil
-// 		}
-// 		if err != nil {
-// 			return err
-// 		}
-// 		key := serialize(in.Location)
-
-// 		s.mu.Lock()
-// 		s.routeNotes[key] = append(s.routeNotes[key], in)
-// 		// Note: this copy prevents blocking other clients while serving this one.
-// 		// We don't need to do a deep copy, because elements in the slice are
-// 		// insert-only and never modified.
-// 		rn := make([]*pb.RouteNote, len(s.routeNotes[key]))
-// 		copy(rn, s.routeNotes[key])
-// 		s.mu.Unlock()
-
-// 		for _, note := range rn {
-// 			if err := stream.Send(note); err != nil {
-// 				return err
-// 			}
-// 		}
-	// 	}
+	for {
+		in, err := stream.Recv()
+		if err == io.EOF {
+			log.Print("Got EOF from ship, closing.")
+			return nil
+		}
+		if err != nil {
+			log.Printf("Failed to recive from ship: %v", err)
+			return err
+		}
+		log.Printf("Got %v from ship", in)
+	}
+	log.Print("Closing bidirectional stream with ship")
 	return nil
 }
 

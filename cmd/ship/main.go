@@ -59,6 +59,5 @@ func main() {
 			log.Printf("Got update %v", in)
 		}
 	}()
-	stream.CloseSend()
 	<-waitc
 }
