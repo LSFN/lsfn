@@ -1,25 +1,12 @@
-.gradle
-/build/
-!gradle/wrapper/gradle-wrapper.jar
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
+# Test binary, built with `go test -c`
+*.test
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-
-### NetBeans ###
-nbproject/private/
-build/
-nbbuild/
-dist/
-nbdist/
-.nb-gradle/
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
