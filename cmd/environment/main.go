@@ -45,8 +45,6 @@ func (s *server) Command(stream pb.Lobby_CommandServer) error {
 		}
 		log.Printf("Got %v from ship", in)
 	}
-	log.Print("Closing bidirectional stream with ship")
-	return nil
 }
 
 func loadShip(filename string) (*ship.Ship, error) {
