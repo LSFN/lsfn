@@ -15,4 +15,3 @@ type Ship struct {
 	Physics Physics `yaml:"physics"`
 	Parts   []Part  `yaml:"parts"`
 }
-

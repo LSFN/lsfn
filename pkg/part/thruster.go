@@ -1,5 +1,3 @@
 package thruster
 
-type Thruster {
-	
-}
+type Thruster struct{}
