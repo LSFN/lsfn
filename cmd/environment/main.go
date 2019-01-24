@@ -1,15 +1,15 @@
 package main
 
 import (
+	"context"
 	"io"
 	"io/ioutil"
-	"net"
-	"context"
 	"log"
+	"net"
 
+	pb "github.com/LSFN/lsfn/api/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
-	pb "github.com/LSFN/lsfn/api/proto"
 	"gopkg.in/yaml.v2"
 
 	"github.com/LSFN/lsfn/pkg/ship"
@@ -19,7 +19,7 @@ const (
 	port = ":50051"
 )
 
-type server struct {}
+type server struct{}
 
 func (s *server) Join(ctx context.Context, in *pb.JoinServer) (*pb.Welcome, error) {
 	log.Printf("Received message to join")
@@ -32,7 +32,7 @@ func (s *server) Command(stream pb.Lobby_CommandServer) error {
 		log.Printf("Failed to send ship update %v", err)
 		return err
 	}
-	
+
 	for {
 		in, err := stream.Recv()
 		if err == io.EOF {
@@ -83,5 +83,4 @@ func main() {
 		log.Fatalf("failed to serve: %v", err)
 	}
 
-	
 }

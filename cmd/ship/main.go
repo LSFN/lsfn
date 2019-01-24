@@ -1,13 +1,13 @@
 package main
 
 import (
-	"io"
-	"time"
 	"context"
+	"io"
 	"log"
+	"time"
 
-	"google.golang.org/grpc"
 	pb "github.com/LSFN/lsfn/api/proto"
+	"google.golang.org/grpc"
 )
 
 const (
