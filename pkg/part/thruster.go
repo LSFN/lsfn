@@ -1,0 +1,5 @@
+package thruster
+
+type Thruster {
+	
+}

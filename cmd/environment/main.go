@@ -2,6 +2,7 @@ package main
 
 import (
 	"io"
+	"io/ioutil"
 	"net"
 	"context"
 	"log"
@@ -9,14 +10,16 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 	pb "github.com/LSFN/lsfn/api/proto"
+	"gopkg.in/yaml.v2"
+
+	"github.com/LSFN/lsfn/pkg/ship"
 )
 
 const (
 	port = ":50051"
 )
 
-type server struct {
-}
+type server struct {}
 
 func (s *server) Join(ctx context.Context, in *pb.JoinServer) (*pb.Welcome, error) {
 	log.Printf("Received message to join")
@@ -46,7 +49,27 @@ func (s *server) Command(stream pb.Lobby_CommandServer) error {
 	return nil
 }
 
+func loadShip(filename string) (*ship.Ship, error) {
+	log.Printf("Loading ship from file %s", filename)
+	yamlFile, err := ioutil.ReadFile(filename)
+	if err != nil {
+		return nil, err
+	}
+	s := ship.Ship{}
+	err = yaml.Unmarshal(yamlFile, &s)
+	if err != nil {
+		return nil, err
+	}
+
+	return &s, nil
+}
+
 func main() {
+	sh, err := loadShip("configs/ships/resolution-of-dawn.yaml")
+	if err != nil {
+		log.Fatalf("failed to load ship file: %v", err)
+	}
+	log.Printf("Loaded ship %v", sh)
 	log.Printf("Staring server on %v", port)
 	lis, err := net.Listen("tcp", port)
 	if err != nil {
