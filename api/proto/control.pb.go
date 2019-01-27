@@ -3,11 +3,9 @@
 
 package lsfn
 
-import (
-	fmt "fmt"
-	proto "github.com/golang/protobuf/proto"
-	math "math"
-)
+import proto "github.com/golang/protobuf/proto"
+import fmt "fmt"
+import math "math"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -18,7 +16,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 // This gives the difference between a control that is boolean, one that's an int, and one that's a float.
 type ControlDescription_ControlType int32
@@ -37,7 +35,6 @@ var ControlDescription_ControlType_name = map[int32]string{
 	1: "Trigger",
 	2: "Throttle",
 }
-
 var ControlDescription_ControlType_value = map[string]int32{
 	"Toggle":   0,
 	"Trigger":  1,
@@ -47,9 +44,8 @@ var ControlDescription_ControlType_value = map[string]int32{
 func (x ControlDescription_ControlType) String() string {
 	return proto.EnumName(ControlDescription_ControlType_name, int32(x))
 }
-
 func (ControlDescription_ControlType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_c4fb39f201265875, []int{1, 0}
+	return fileDescriptor_control_de2d10e290689f1f, []int{1, 0}
 }
 
 type ThrottleRange struct {
@@ -67,17 +63,16 @@ func (m *ThrottleRange) Reset()         { *m = ThrottleRange{} }
 func (m *ThrottleRange) String() string { return proto.CompactTextString(m) }
 func (*ThrottleRange) ProtoMessage()    {}
 func (*ThrottleRange) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c4fb39f201265875, []int{0}
+	return fileDescriptor_control_de2d10e290689f1f, []int{0}
 }
-
 func (m *ThrottleRange) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ThrottleRange.Unmarshal(m, b)
 }
 func (m *ThrottleRange) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ThrottleRange.Marshal(b, m, deterministic)
 }
-func (m *ThrottleRange) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ThrottleRange.Merge(m, src)
+func (dst *ThrottleRange) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ThrottleRange.Merge(dst, src)
 }
 func (m *ThrottleRange) XXX_Size() int {
 	return xxx_messageInfo_ThrottleRange.Size(m)
@@ -126,17 +121,16 @@ func (m *ControlDescription) Reset()         { *m = ControlDescription{} }
 func (m *ControlDescription) String() string { return proto.CompactTextString(m) }
 func (*ControlDescription) ProtoMessage()    {}
 func (*ControlDescription) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c4fb39f201265875, []int{1}
+	return fileDescriptor_control_de2d10e290689f1f, []int{1}
 }
-
 func (m *ControlDescription) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ControlDescription.Unmarshal(m, b)
 }
 func (m *ControlDescription) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ControlDescription.Marshal(b, m, deterministic)
 }
-func (m *ControlDescription) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ControlDescription.Merge(m, src)
+func (dst *ControlDescription) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ControlDescription.Merge(dst, src)
 }
 func (m *ControlDescription) XXX_Size() int {
 	return xxx_messageInfo_ControlDescription.Size(m)
@@ -192,17 +186,16 @@ func (m *ControlState) Reset()         { *m = ControlState{} }
 func (m *ControlState) String() string { return proto.CompactTextString(m) }
 func (*ControlState) ProtoMessage()    {}
 func (*ControlState) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c4fb39f201265875, []int{2}
+	return fileDescriptor_control_de2d10e290689f1f, []int{2}
 }
-
 func (m *ControlState) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ControlState.Unmarshal(m, b)
 }
 func (m *ControlState) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ControlState.Marshal(b, m, deterministic)
 }
-func (m *ControlState) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ControlState.Merge(m, src)
+func (dst *ControlState) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ControlState.Merge(dst, src)
 }
 func (m *ControlState) XXX_Size() int {
 	return xxx_messageInfo_ControlState.Size(m)
@@ -257,12 +250,72 @@ func (m *ControlState) GetThrottle() int32 {
 	return 0
 }
 
-// XXX_OneofWrappers is for the internal use of the proto package.
-func (*ControlState) XXX_OneofWrappers() []interface{} {
-	return []interface{}{
+// XXX_OneofFuncs is for the internal use of the proto package.
+func (*ControlState) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
+	return _ControlState_OneofMarshaler, _ControlState_OneofUnmarshaler, _ControlState_OneofSizer, []interface{}{
 		(*ControlState_Toggle)(nil),
 		(*ControlState_Throttle)(nil),
 	}
+}
+
+func _ControlState_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
+	m := msg.(*ControlState)
+	// ControlTypeValue
+	switch x := m.ControlTypeValue.(type) {
+	case *ControlState_Toggle:
+		t := uint64(0)
+		if x.Toggle {
+			t = 1
+		}
+		b.EncodeVarint(2<<3 | proto.WireVarint)
+		b.EncodeVarint(t)
+	case *ControlState_Throttle:
+		b.EncodeVarint(3<<3 | proto.WireVarint)
+		b.EncodeVarint(uint64(x.Throttle))
+	case nil:
+	default:
+		return fmt.Errorf("ControlState.ControlTypeValue has unexpected type %T", x)
+	}
+	return nil
+}
+
+func _ControlState_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
+	m := msg.(*ControlState)
+	switch tag {
+	case 2: // ControlTypeValue.toggle
+		if wire != proto.WireVarint {
+			return true, proto.ErrInternalBadWireType
+		}
+		x, err := b.DecodeVarint()
+		m.ControlTypeValue = &ControlState_Toggle{x != 0}
+		return true, err
+	case 3: // ControlTypeValue.throttle
+		if wire != proto.WireVarint {
+			return true, proto.ErrInternalBadWireType
+		}
+		x, err := b.DecodeVarint()
+		m.ControlTypeValue = &ControlState_Throttle{int32(x)}
+		return true, err
+	default:
+		return false, nil
+	}
+}
+
+func _ControlState_OneofSizer(msg proto.Message) (n int) {
+	m := msg.(*ControlState)
+	// ControlTypeValue
+	switch x := m.ControlTypeValue.(type) {
+	case *ControlState_Toggle:
+		n += 1 // tag and wire
+		n += 1
+	case *ControlState_Throttle:
+		n += 1 // tag and wire
+		n += proto.SizeVarint(uint64(x.Throttle))
+	case nil:
+	default:
+		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
+	}
+	return n
 }
 
 // Strutually this message is the same as ControlState, but semanticall it describes the changing of a control (as
@@ -282,17 +335,16 @@ func (m *ChangeControl) Reset()         { *m = ChangeControl{} }
 func (m *ChangeControl) String() string { return proto.CompactTextString(m) }
 func (*ChangeControl) ProtoMessage()    {}
 func (*ChangeControl) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c4fb39f201265875, []int{3}
+	return fileDescriptor_control_de2d10e290689f1f, []int{3}
 }
-
 func (m *ChangeControl) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ChangeControl.Unmarshal(m, b)
 }
 func (m *ChangeControl) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ChangeControl.Marshal(b, m, deterministic)
 }
-func (m *ChangeControl) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ChangeControl.Merge(m, src)
+func (dst *ChangeControl) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ChangeControl.Merge(dst, src)
 }
 func (m *ChangeControl) XXX_Size() int {
 	return xxx_messageInfo_ChangeControl.Size(m)
@@ -347,25 +399,85 @@ func (m *ChangeControl) GetThrottle() int32 {
 	return 0
 }
 
-// XXX_OneofWrappers is for the internal use of the proto package.
-func (*ChangeControl) XXX_OneofWrappers() []interface{} {
-	return []interface{}{
+// XXX_OneofFuncs is for the internal use of the proto package.
+func (*ChangeControl) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
+	return _ChangeControl_OneofMarshaler, _ChangeControl_OneofUnmarshaler, _ChangeControl_OneofSizer, []interface{}{
 		(*ChangeControl_Toggle)(nil),
 		(*ChangeControl_Throttle)(nil),
 	}
 }
 
+func _ChangeControl_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
+	m := msg.(*ChangeControl)
+	// ControlTypeValue
+	switch x := m.ControlTypeValue.(type) {
+	case *ChangeControl_Toggle:
+		t := uint64(0)
+		if x.Toggle {
+			t = 1
+		}
+		b.EncodeVarint(2<<3 | proto.WireVarint)
+		b.EncodeVarint(t)
+	case *ChangeControl_Throttle:
+		b.EncodeVarint(3<<3 | proto.WireVarint)
+		b.EncodeVarint(uint64(x.Throttle))
+	case nil:
+	default:
+		return fmt.Errorf("ChangeControl.ControlTypeValue has unexpected type %T", x)
+	}
+	return nil
+}
+
+func _ChangeControl_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
+	m := msg.(*ChangeControl)
+	switch tag {
+	case 2: // ControlTypeValue.toggle
+		if wire != proto.WireVarint {
+			return true, proto.ErrInternalBadWireType
+		}
+		x, err := b.DecodeVarint()
+		m.ControlTypeValue = &ChangeControl_Toggle{x != 0}
+		return true, err
+	case 3: // ControlTypeValue.throttle
+		if wire != proto.WireVarint {
+			return true, proto.ErrInternalBadWireType
+		}
+		x, err := b.DecodeVarint()
+		m.ControlTypeValue = &ChangeControl_Throttle{int32(x)}
+		return true, err
+	default:
+		return false, nil
+	}
+}
+
+func _ChangeControl_OneofSizer(msg proto.Message) (n int) {
+	m := msg.(*ChangeControl)
+	// ControlTypeValue
+	switch x := m.ControlTypeValue.(type) {
+	case *ChangeControl_Toggle:
+		n += 1 // tag and wire
+		n += 1
+	case *ChangeControl_Throttle:
+		n += 1 // tag and wire
+		n += proto.SizeVarint(uint64(x.Throttle))
+	case nil:
+	default:
+		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
+	}
+	return n
+}
+
 func init() {
-	proto.RegisterEnum("lsfn.ControlDescription_ControlType", ControlDescription_ControlType_name, ControlDescription_ControlType_value)
 	proto.RegisterType((*ThrottleRange)(nil), "lsfn.ThrottleRange")
 	proto.RegisterType((*ControlDescription)(nil), "lsfn.ControlDescription")
 	proto.RegisterType((*ControlState)(nil), "lsfn.ControlState")
 	proto.RegisterType((*ChangeControl)(nil), "lsfn.ChangeControl")
+	proto.RegisterEnum("lsfn.ControlDescription_ControlType", ControlDescription_ControlType_name, ControlDescription_ControlType_value)
 }
 
-func init() { proto.RegisterFile("api/proto/control.proto", fileDescriptor_c4fb39f201265875) }
+func init() { proto.RegisterFile("api/proto/control.proto", fileDescriptor_control_de2d10e290689f1f) }
 
-var fileDescriptor_c4fb39f201265875 = []byte{
+var fileDescriptor_control_de2d10e290689f1f = []byte{
 	// 303 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x92, 0x41, 0x4f, 0xbb, 0x40,
 	0x10, 0xc5, 0x0b, 0xff, 0xfe, 0x29, 0x1d, 0x4a, 0x43, 0xc6, 0x83, 0x1c, 0x3c, 0x34, 0xc4, 0x43,

@@ -3,11 +3,9 @@
 
 package lsfn
 
-import (
-	fmt "fmt"
-	proto "github.com/golang/protobuf/proto"
-	math "math"
-)
+import proto "github.com/golang/protobuf/proto"
+import fmt "fmt"
+import math "math"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -18,7 +16,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 // This gives the difference between a control that is boolean, one that's an int, and one that's a float.
 type SensorDescription_SensorType int32
@@ -37,7 +35,6 @@ var SensorDescription_SensorType_name = map[int32]string{
 	1: "VolumetricRadar",
 	2: "IFFScanner",
 }
-
 var SensorDescription_SensorType_value = map[string]int32{
 	"GalacticCoordinates": 0,
 	"VolumetricRadar":     1,
@@ -47,9 +44,8 @@ var SensorDescription_SensorType_value = map[string]int32{
 func (x SensorDescription_SensorType) String() string {
 	return proto.EnumName(SensorDescription_SensorType_name, int32(x))
 }
-
 func (SensorDescription_SensorType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_a01333b65c596309, []int{0, 0}
+	return fileDescriptor_sensor_3da753cdae3df91e, []int{0, 0}
 }
 
 // Describe a Sensor. Sensors are things that the ship knows. For example it's galactic position is a sensor, radar is a
@@ -71,17 +67,16 @@ func (m *SensorDescription) Reset()         { *m = SensorDescription{} }
 func (m *SensorDescription) String() string { return proto.CompactTextString(m) }
 func (*SensorDescription) ProtoMessage()    {}
 func (*SensorDescription) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a01333b65c596309, []int{0}
+	return fileDescriptor_sensor_3da753cdae3df91e, []int{0}
 }
-
 func (m *SensorDescription) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_SensorDescription.Unmarshal(m, b)
 }
 func (m *SensorDescription) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_SensorDescription.Marshal(b, m, deterministic)
 }
-func (m *SensorDescription) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_SensorDescription.Merge(m, src)
+func (dst *SensorDescription) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SensorDescription.Merge(dst, src)
 }
 func (m *SensorDescription) XXX_Size() int {
 	return xxx_messageInfo_SensorDescription.Size(m)
@@ -143,17 +138,16 @@ func (m *GalacticCoordinate) Reset()         { *m = GalacticCoordinate{} }
 func (m *GalacticCoordinate) String() string { return proto.CompactTextString(m) }
 func (*GalacticCoordinate) ProtoMessage()    {}
 func (*GalacticCoordinate) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a01333b65c596309, []int{1}
+	return fileDescriptor_sensor_3da753cdae3df91e, []int{1}
 }
-
 func (m *GalacticCoordinate) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GalacticCoordinate.Unmarshal(m, b)
 }
 func (m *GalacticCoordinate) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_GalacticCoordinate.Marshal(b, m, deterministic)
 }
-func (m *GalacticCoordinate) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GalacticCoordinate.Merge(m, src)
+func (dst *GalacticCoordinate) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GalacticCoordinate.Merge(dst, src)
 }
 func (m *GalacticCoordinate) XXX_Size() int {
 	return xxx_messageInfo_GalacticCoordinate.Size(m)
@@ -199,17 +193,16 @@ func (m *ShipRelativeCoordinate) Reset()         { *m = ShipRelativeCoordinate{}
 func (m *ShipRelativeCoordinate) String() string { return proto.CompactTextString(m) }
 func (*ShipRelativeCoordinate) ProtoMessage()    {}
 func (*ShipRelativeCoordinate) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a01333b65c596309, []int{2}
+	return fileDescriptor_sensor_3da753cdae3df91e, []int{2}
 }
-
 func (m *ShipRelativeCoordinate) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ShipRelativeCoordinate.Unmarshal(m, b)
 }
 func (m *ShipRelativeCoordinate) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ShipRelativeCoordinate.Marshal(b, m, deterministic)
 }
-func (m *ShipRelativeCoordinate) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ShipRelativeCoordinate.Merge(m, src)
+func (dst *ShipRelativeCoordinate) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ShipRelativeCoordinate.Merge(dst, src)
 }
 func (m *ShipRelativeCoordinate) XXX_Size() int {
 	return xxx_messageInfo_ShipRelativeCoordinate.Size(m)
@@ -253,17 +246,16 @@ func (m *IFFPing) Reset()         { *m = IFFPing{} }
 func (m *IFFPing) String() string { return proto.CompactTextString(m) }
 func (*IFFPing) ProtoMessage()    {}
 func (*IFFPing) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a01333b65c596309, []int{3}
+	return fileDescriptor_sensor_3da753cdae3df91e, []int{3}
 }
-
 func (m *IFFPing) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IFFPing.Unmarshal(m, b)
 }
 func (m *IFFPing) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IFFPing.Marshal(b, m, deterministic)
 }
-func (m *IFFPing) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IFFPing.Merge(m, src)
+func (dst *IFFPing) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IFFPing.Merge(dst, src)
 }
 func (m *IFFPing) XXX_Size() int {
 	return xxx_messageInfo_IFFPing.Size(m)
@@ -299,17 +291,16 @@ func (m *IFFReadout) Reset()         { *m = IFFReadout{} }
 func (m *IFFReadout) String() string { return proto.CompactTextString(m) }
 func (*IFFReadout) ProtoMessage()    {}
 func (*IFFReadout) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a01333b65c596309, []int{4}
+	return fileDescriptor_sensor_3da753cdae3df91e, []int{4}
 }
-
 func (m *IFFReadout) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_IFFReadout.Unmarshal(m, b)
 }
 func (m *IFFReadout) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_IFFReadout.Marshal(b, m, deterministic)
 }
-func (m *IFFReadout) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_IFFReadout.Merge(m, src)
+func (dst *IFFReadout) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_IFFReadout.Merge(dst, src)
 }
 func (m *IFFReadout) XXX_Size() int {
 	return xxx_messageInfo_IFFReadout.Size(m)
@@ -346,17 +337,16 @@ func (m *VolumetricRange) Reset()         { *m = VolumetricRange{} }
 func (m *VolumetricRange) String() string { return proto.CompactTextString(m) }
 func (*VolumetricRange) ProtoMessage()    {}
 func (*VolumetricRange) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a01333b65c596309, []int{5}
+	return fileDescriptor_sensor_3da753cdae3df91e, []int{5}
 }
-
 func (m *VolumetricRange) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_VolumetricRange.Unmarshal(m, b)
 }
 func (m *VolumetricRange) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_VolumetricRange.Marshal(b, m, deterministic)
 }
-func (m *VolumetricRange) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_VolumetricRange.Merge(m, src)
+func (dst *VolumetricRange) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_VolumetricRange.Merge(dst, src)
 }
 func (m *VolumetricRange) XXX_Size() int {
 	return xxx_messageInfo_VolumetricRange.Size(m)
@@ -420,17 +410,16 @@ func (m *VolumetricData) Reset()         { *m = VolumetricData{} }
 func (m *VolumetricData) String() string { return proto.CompactTextString(m) }
 func (*VolumetricData) ProtoMessage()    {}
 func (*VolumetricData) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a01333b65c596309, []int{6}
+	return fileDescriptor_sensor_3da753cdae3df91e, []int{6}
 }
-
 func (m *VolumetricData) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_VolumetricData.Unmarshal(m, b)
 }
 func (m *VolumetricData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_VolumetricData.Marshal(b, m, deterministic)
 }
-func (m *VolumetricData) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_VolumetricData.Merge(m, src)
+func (dst *VolumetricData) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_VolumetricData.Merge(dst, src)
 }
 func (m *VolumetricData) XXX_Size() int {
 	return xxx_messageInfo_VolumetricData.Size(m)
@@ -461,17 +450,16 @@ func (m *VolumetricDataPlane) Reset()         { *m = VolumetricDataPlane{} }
 func (m *VolumetricDataPlane) String() string { return proto.CompactTextString(m) }
 func (*VolumetricDataPlane) ProtoMessage()    {}
 func (*VolumetricDataPlane) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a01333b65c596309, []int{6, 0}
+	return fileDescriptor_sensor_3da753cdae3df91e, []int{6, 0}
 }
-
 func (m *VolumetricDataPlane) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_VolumetricDataPlane.Unmarshal(m, b)
 }
 func (m *VolumetricDataPlane) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_VolumetricDataPlane.Marshal(b, m, deterministic)
 }
-func (m *VolumetricDataPlane) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_VolumetricDataPlane.Merge(m, src)
+func (dst *VolumetricDataPlane) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_VolumetricDataPlane.Merge(dst, src)
 }
 func (m *VolumetricDataPlane) XXX_Size() int {
 	return xxx_messageInfo_VolumetricDataPlane.Size(m)
@@ -500,17 +488,16 @@ func (m *VolumetricDataPlaneLine) Reset()         { *m = VolumetricDataPlaneLine
 func (m *VolumetricDataPlaneLine) String() string { return proto.CompactTextString(m) }
 func (*VolumetricDataPlaneLine) ProtoMessage()    {}
 func (*VolumetricDataPlaneLine) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a01333b65c596309, []int{6, 0, 0}
+	return fileDescriptor_sensor_3da753cdae3df91e, []int{6, 0, 0}
 }
-
 func (m *VolumetricDataPlaneLine) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_VolumetricDataPlaneLine.Unmarshal(m, b)
 }
 func (m *VolumetricDataPlaneLine) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_VolumetricDataPlaneLine.Marshal(b, m, deterministic)
 }
-func (m *VolumetricDataPlaneLine) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_VolumetricDataPlaneLine.Merge(m, src)
+func (dst *VolumetricDataPlaneLine) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_VolumetricDataPlaneLine.Merge(dst, src)
 }
 func (m *VolumetricDataPlaneLine) XXX_Size() int {
 	return xxx_messageInfo_VolumetricDataPlaneLine.Size(m)
@@ -546,17 +533,16 @@ func (m *SensorState) Reset()         { *m = SensorState{} }
 func (m *SensorState) String() string { return proto.CompactTextString(m) }
 func (*SensorState) ProtoMessage()    {}
 func (*SensorState) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a01333b65c596309, []int{7}
+	return fileDescriptor_sensor_3da753cdae3df91e, []int{7}
 }
-
 func (m *SensorState) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_SensorState.Unmarshal(m, b)
 }
 func (m *SensorState) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_SensorState.Marshal(b, m, deterministic)
 }
-func (m *SensorState) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_SensorState.Merge(m, src)
+func (dst *SensorState) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SensorState.Merge(dst, src)
 }
 func (m *SensorState) XXX_Size() int {
 	return xxx_messageInfo_SensorState.Size(m)
@@ -624,17 +610,100 @@ func (m *SensorState) GetIffData() *IFFReadout {
 	return nil
 }
 
-// XXX_OneofWrappers is for the internal use of the proto package.
-func (*SensorState) XXX_OneofWrappers() []interface{} {
-	return []interface{}{
+// XXX_OneofFuncs is for the internal use of the proto package.
+func (*SensorState) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
+	return _SensorState_OneofMarshaler, _SensorState_OneofUnmarshaler, _SensorState_OneofSizer, []interface{}{
 		(*SensorState_GalacticCoordinate)(nil),
 		(*SensorState_RadarData)(nil),
 		(*SensorState_IffData)(nil),
 	}
 }
 
+func _SensorState_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
+	m := msg.(*SensorState)
+	// SensorTypeValue
+	switch x := m.SensorTypeValue.(type) {
+	case *SensorState_GalacticCoordinate:
+		b.EncodeVarint(2<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.GalacticCoordinate); err != nil {
+			return err
+		}
+	case *SensorState_RadarData:
+		b.EncodeVarint(3<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.RadarData); err != nil {
+			return err
+		}
+	case *SensorState_IffData:
+		b.EncodeVarint(4<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.IffData); err != nil {
+			return err
+		}
+	case nil:
+	default:
+		return fmt.Errorf("SensorState.SensorTypeValue has unexpected type %T", x)
+	}
+	return nil
+}
+
+func _SensorState_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
+	m := msg.(*SensorState)
+	switch tag {
+	case 2: // SensorTypeValue.galacticCoordinate
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(GalacticCoordinate)
+		err := b.DecodeMessage(msg)
+		m.SensorTypeValue = &SensorState_GalacticCoordinate{msg}
+		return true, err
+	case 3: // SensorTypeValue.radarData
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(VolumetricData)
+		err := b.DecodeMessage(msg)
+		m.SensorTypeValue = &SensorState_RadarData{msg}
+		return true, err
+	case 4: // SensorTypeValue.iffData
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(IFFReadout)
+		err := b.DecodeMessage(msg)
+		m.SensorTypeValue = &SensorState_IffData{msg}
+		return true, err
+	default:
+		return false, nil
+	}
+}
+
+func _SensorState_OneofSizer(msg proto.Message) (n int) {
+	m := msg.(*SensorState)
+	// SensorTypeValue
+	switch x := m.SensorTypeValue.(type) {
+	case *SensorState_GalacticCoordinate:
+		s := proto.Size(x.GalacticCoordinate)
+		n += 1 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *SensorState_RadarData:
+		s := proto.Size(x.RadarData)
+		n += 1 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *SensorState_IffData:
+		s := proto.Size(x.IffData)
+		n += 1 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case nil:
+	default:
+		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
+	}
+	return n
+}
+
 func init() {
-	proto.RegisterEnum("lsfn.SensorDescription_SensorType", SensorDescription_SensorType_name, SensorDescription_SensorType_value)
 	proto.RegisterType((*SensorDescription)(nil), "lsfn.SensorDescription")
 	proto.RegisterType((*GalacticCoordinate)(nil), "lsfn.GalacticCoordinate")
 	proto.RegisterType((*ShipRelativeCoordinate)(nil), "lsfn.ShipRelativeCoordinate")
@@ -645,11 +714,12 @@ func init() {
 	proto.RegisterType((*VolumetricDataPlane)(nil), "lsfn.VolumetricData.plane")
 	proto.RegisterType((*VolumetricDataPlaneLine)(nil), "lsfn.VolumetricData.plane.line")
 	proto.RegisterType((*SensorState)(nil), "lsfn.SensorState")
+	proto.RegisterEnum("lsfn.SensorDescription_SensorType", SensorDescription_SensorType_name, SensorDescription_SensorType_value)
 }
 
-func init() { proto.RegisterFile("api/proto/sensor.proto", fileDescriptor_a01333b65c596309) }
+func init() { proto.RegisterFile("api/proto/sensor.proto", fileDescriptor_sensor_3da753cdae3df91e) }
 
-var fileDescriptor_a01333b65c596309 = []byte{
+var fileDescriptor_sensor_3da753cdae3df91e = []byte{
 	// 588 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x54, 0xd1, 0x6e, 0xd3, 0x3c,
 	0x14, 0xae, 0xb3, 0xa6, 0xfb, 0x77, 0xf2, 0xd3, 0x65, 0xde, 0x18, 0x51, 0x35, 0x41, 0x15, 0x6e,

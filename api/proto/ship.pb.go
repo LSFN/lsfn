@@ -3,11 +3,9 @@
 
 package lsfn
 
-import (
-	fmt "fmt"
-	proto "github.com/golang/protobuf/proto"
-	math "math"
-)
+import proto "github.com/golang/protobuf/proto"
+import fmt "fmt"
+import math "math"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -18,7 +16,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 type ShipUpdate struct {
 	// Types that are valid to be assigned to Union:
@@ -34,17 +32,16 @@ func (m *ShipUpdate) Reset()         { *m = ShipUpdate{} }
 func (m *ShipUpdate) String() string { return proto.CompactTextString(m) }
 func (*ShipUpdate) ProtoMessage()    {}
 func (*ShipUpdate) Descriptor() ([]byte, []int) {
-	return fileDescriptor_eaf99ebe527c4502, []int{0}
+	return fileDescriptor_ship_a34724d7faa3edbc, []int{0}
 }
-
 func (m *ShipUpdate) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ShipUpdate.Unmarshal(m, b)
 }
 func (m *ShipUpdate) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ShipUpdate.Marshal(b, m, deterministic)
 }
-func (m *ShipUpdate) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ShipUpdate.Merge(m, src)
+func (dst *ShipUpdate) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ShipUpdate.Merge(dst, src)
 }
 func (m *ShipUpdate) XXX_Size() int {
 	return xxx_messageInfo_ShipUpdate.Size(m)
@@ -92,12 +89,78 @@ func (m *ShipUpdate) GetSensor() *SensorState {
 	return nil
 }
 
-// XXX_OneofWrappers is for the internal use of the proto package.
-func (*ShipUpdate) XXX_OneofWrappers() []interface{} {
-	return []interface{}{
+// XXX_OneofFuncs is for the internal use of the proto package.
+func (*ShipUpdate) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
+	return _ShipUpdate_OneofMarshaler, _ShipUpdate_OneofUnmarshaler, _ShipUpdate_OneofSizer, []interface{}{
 		(*ShipUpdate_Control)(nil),
 		(*ShipUpdate_Sensor)(nil),
 	}
+}
+
+func _ShipUpdate_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
+	m := msg.(*ShipUpdate)
+	// Union
+	switch x := m.Union.(type) {
+	case *ShipUpdate_Control:
+		b.EncodeVarint(1<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.Control); err != nil {
+			return err
+		}
+	case *ShipUpdate_Sensor:
+		b.EncodeVarint(2<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.Sensor); err != nil {
+			return err
+		}
+	case nil:
+	default:
+		return fmt.Errorf("ShipUpdate.Union has unexpected type %T", x)
+	}
+	return nil
+}
+
+func _ShipUpdate_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
+	m := msg.(*ShipUpdate)
+	switch tag {
+	case 1: // Union.control
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(ControlState)
+		err := b.DecodeMessage(msg)
+		m.Union = &ShipUpdate_Control{msg}
+		return true, err
+	case 2: // Union.sensor
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(SensorState)
+		err := b.DecodeMessage(msg)
+		m.Union = &ShipUpdate_Sensor{msg}
+		return true, err
+	default:
+		return false, nil
+	}
+}
+
+func _ShipUpdate_OneofSizer(msg proto.Message) (n int) {
+	m := msg.(*ShipUpdate)
+	// Union
+	switch x := m.Union.(type) {
+	case *ShipUpdate_Control:
+		s := proto.Size(x.Control)
+		n += 1 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *ShipUpdate_Sensor:
+		s := proto.Size(x.Sensor)
+		n += 1 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case nil:
+	default:
+		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
+	}
+	return n
 }
 
 type ShipCommand struct {
@@ -111,17 +174,16 @@ func (m *ShipCommand) Reset()         { *m = ShipCommand{} }
 func (m *ShipCommand) String() string { return proto.CompactTextString(m) }
 func (*ShipCommand) ProtoMessage()    {}
 func (*ShipCommand) Descriptor() ([]byte, []int) {
-	return fileDescriptor_eaf99ebe527c4502, []int{1}
+	return fileDescriptor_ship_a34724d7faa3edbc, []int{1}
 }
-
 func (m *ShipCommand) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ShipCommand.Unmarshal(m, b)
 }
 func (m *ShipCommand) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ShipCommand.Marshal(b, m, deterministic)
 }
-func (m *ShipCommand) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ShipCommand.Merge(m, src)
+func (dst *ShipCommand) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ShipCommand.Merge(dst, src)
 }
 func (m *ShipCommand) XXX_Size() int {
 	return xxx_messageInfo_ShipCommand.Size(m)
@@ -153,17 +215,16 @@ func (m *ShipDescription) Reset()         { *m = ShipDescription{} }
 func (m *ShipDescription) String() string { return proto.CompactTextString(m) }
 func (*ShipDescription) ProtoMessage()    {}
 func (*ShipDescription) Descriptor() ([]byte, []int) {
-	return fileDescriptor_eaf99ebe527c4502, []int{2}
+	return fileDescriptor_ship_a34724d7faa3edbc, []int{2}
 }
-
 func (m *ShipDescription) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ShipDescription.Unmarshal(m, b)
 }
 func (m *ShipDescription) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ShipDescription.Marshal(b, m, deterministic)
 }
-func (m *ShipDescription) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ShipDescription.Merge(m, src)
+func (dst *ShipDescription) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ShipDescription.Merge(dst, src)
 }
 func (m *ShipDescription) XXX_Size() int {
 	return xxx_messageInfo_ShipDescription.Size(m)
@@ -208,9 +269,9 @@ func init() {
 	proto.RegisterType((*ShipDescription)(nil), "lsfn.ShipDescription")
 }
 
-func init() { proto.RegisterFile("api/proto/ship.proto", fileDescriptor_eaf99ebe527c4502) }
+func init() { proto.RegisterFile("api/proto/ship.proto", fileDescriptor_ship_a34724d7faa3edbc) }
 
-var fileDescriptor_eaf99ebe527c4502 = []byte{
+var fileDescriptor_ship_a34724d7faa3edbc = []byte{
 	// 258 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x5c, 0x90, 0xc1, 0x4e, 0xc3, 0x30,
 	0x10, 0x44, 0x69, 0x1a, 0x1a, 0xba, 0x91, 0x40, 0x2c, 0x88, 0x5a, 0x3d, 0x55, 0x39, 0x55, 0x42,
