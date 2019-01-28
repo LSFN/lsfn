@@ -13,6 +13,8 @@ import (
 	"gopkg.in/yaml.v2"
 
 	"github.com/LSFN/lsfn/pkg/ship"
+	"github.com/LSFN/lsfn/pkg/engine"
+	"github.com/LSFN/ode"
 )
 
 const (
@@ -47,13 +49,13 @@ func (s *server) Command(stream pb.Lobby_CommandServer) error {
 	}
 }
 
-func loadShip(filename string) (*ship.Ship, error) {
+func loadShip(filename string) (*ship.ShipDescription, error) {
 	log.Printf("Loading ship from file %s", filename)
 	yamlFile, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return nil, err
 	}
-	s := ship.Ship{}
+	s := ship.ShipDescription{}
 	err = yaml.Unmarshal(yamlFile, &s)
 	if err != nil {
 		return nil, err
@@ -62,12 +64,28 @@ func loadShip(filename string) (*ship.Ship, error) {
 	return &s, nil
 }
 
+func simulate(game *engine.Game) {
+	log.Print("Starting simulation")
+	for {
+		game.PhysicsWorld.Step(0.1)
+		log.Printf("Ship at &v", game.Ships[0].PhysicsBody.Position());
+	}
+}
+
 func main() {
+	ode.Init(0, ode.AllAFlag)
+	
+	game := engine.NewGame()
 	sh, err := loadShip("configs/ships/resolution-of-dawn.yaml")
 	if err != nil {
 		log.Fatalf("failed to load ship file: %v", err)
 	}
 	log.Printf("Loaded ship %v", sh)
+	game.AddShip(sh)
+
+	
+	simulate(game)
+	
 	log.Printf("Staring server on %v", port)
 	lis, err := net.Listen("tcp", port)
 	if err != nil {
