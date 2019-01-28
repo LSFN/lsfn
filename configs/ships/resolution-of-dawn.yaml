@@ -3,3 +3,4 @@ physics:
   width: 20
   height: 20
   length: 100
+  mass: 1

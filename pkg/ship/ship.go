@@ -6,6 +6,7 @@ type Physics struct {
 	Width  uint `yaml:"width"`
 	Height uint `yaml:"height"`
 	Length uint `yaml:"length"`
+	Mass   uint `yaml:"mass"`
 }
 
 // A Part is something that's on the ship. Generally this will expose a number
