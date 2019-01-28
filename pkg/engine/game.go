@@ -1,13 +1,26 @@
 package engine
 
 import(
+	"log"
+
 	"github.com/LSFN/ode"
 	"github.com/LSFN/lsfn/pkg/ship"
 )
 
+type Part interface {
+	Step(ship *Ship)
+}
+
+type GPS struct {}
+
+func (g GPS) Step(ship *Ship) {
+	log.Printf("Ship at &v", ship.PhysicsBody.Position());
+}
+
 type Ship struct {
 	Description *ship.ShipDescription
 	PhysicsBody *ode.Body
+	Parts       []Part
 }
 
 type Game struct {
@@ -39,8 +52,17 @@ func (g *Game) AddShip(sd *ship.ShipDescription) {
 
 	collision.SetBody(body)
 
+	// Create default parts
+	gps := GPS{}
+
+	parts := []Part{gps}
+	
 	// Create the Ship struct
-	s := Ship{Description: sd, PhysicsBody: &body}
+	s := Ship{
+		Description: sd,
+		PhysicsBody: &body,
+		Parts: parts,
+	}
 	g.Ships = append(g.Ships, &s)
 
 	// FIXME Add little example force to push it

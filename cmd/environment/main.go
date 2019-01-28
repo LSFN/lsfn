@@ -68,7 +68,11 @@ func simulate(game *engine.Game) {
 	log.Print("Starting simulation")
 	for {
 		game.PhysicsWorld.Step(0.1)
-		log.Printf("Ship at &v", game.Ships[0].PhysicsBody.Position());
+		for _, ship := range game.Ships {
+			for _, part := range ship.Parts {
+				part.Step(ship)
+			}
+		}
 	}
 }
 
