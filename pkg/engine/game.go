@@ -57,6 +57,8 @@ func (g GPS) Register(ship *Ship) {
 type Ship struct {
 	Description *ship.ShipDescription
 	PhysicsBody *ode.Body
+	Updates     chan *pb.ShipUpdate
+	Stop        chan int
 	Parts       []Part
 	Sensors     []Sensor
 }

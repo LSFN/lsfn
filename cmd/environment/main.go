@@ -36,11 +36,29 @@ func (s *server) Join(ctx context.Context, in *pb.JoinServer) (*pb.Welcome, erro
 
 func (s *server) Command(stream pb.Lobby_CommandServer) error {
 	log.Print("Bidirectional stream opened to command ship")
-	if err := stream.Send(&pb.ShipUpdate{Union: &pb.ShipUpdate_Control{Control: &pb.ControlState{Id: "0", ControlTypeValue: &pb.ControlState_Toggle{Toggle: true}}}}); err != nil {
-		log.Printf("Failed to send ship update %v", err)
-		return err
-	}
 
+	updates := make(chan *pb.ShipUpdate, 10000)
+	stop := make(chan int)
+	go func() {
+		log.Printf("Make goroutine to take ship updates")
+		// TODO close this channel correctly
+		for i := range updates {
+			if err := stream.Send(i); err != nil {
+				log.Printf("Failed to send ship update %v", err)
+				return
+			}
+		}
+	}()
+
+	// TODO add this channel to the game in a thread-safe way
+	s.Game.Ships[0].Updates = updates
+	s.Game.Ships[0].Stop = stop
+
+	defer func() {
+		log.Print("Trigger close")
+		close(stop)
+	}()
+	
 	for {
 		in, err := stream.Recv()
 		if err == io.EOF {
@@ -77,7 +95,19 @@ func simulate(game *engine.Game) {
 		for _, ship := range game.Ships {
 			for _, sensor := range ship.Sensors {
 				sensor.Update(ship)
-				log.Printf("Sensor says %v", sensor.Read())
+				log.Printf("Foo")
+				select {
+				case <-ship.Stop:
+					log.Print("close triggered")
+					close(ship.Updates)
+					ship.Updates = nil
+				default:
+					if ship.Updates != nil {
+						u := &pb.ShipUpdate{Union: sensor.Read()}
+						ship.Updates <- u
+
+					}
+				}
 			}
 		}
 	}
@@ -94,6 +124,8 @@ func main() {
 	}
 	log.Printf("Loaded ship %v", sh)
 	server.Game.AddShip(sh)
+
+	go simulate(server.Game)
 
 	log.Printf("Staring server on %v", port)
 	lis, err := net.Listen("tcp", port)
