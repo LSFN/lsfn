@@ -38,6 +38,9 @@ func main() {
 		log.Fatalf("could not join server: %v", err)
 	}
 	log.Printf("Joined server, assinged ship %s", r.Ship.Name)
+	for _, sensor := range r.Ship.Sensors {
+		log.Printf("Has sensor %s of type %s", sensor.Name, sensor.SensorType)
+	}
 
 	stream, err := c.Command(context.Background())
 	if err != nil {

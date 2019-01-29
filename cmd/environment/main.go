@@ -21,11 +21,17 @@ const (
 	port = ":50051"
 )
 
-type server struct{}
+type server struct {
+	Game *engine.Game
+}
+
+func NewServer() (*server) {
+	return &server{Game: engine.NewGame()}
+}
 
 func (s *server) Join(ctx context.Context, in *pb.JoinServer) (*pb.Welcome, error) {
 	log.Printf("Received message to join")
-	return &pb.Welcome{Ship: &pb.ShipDescription{Id: "1", Name: "Resolution to Finish"}}, nil
+	return &pb.Welcome{Ship: s.Game.Ships[0].Describe()}, nil
 }
 
 func (s *server) Command(stream pb.Lobby_CommandServer) error {
@@ -79,25 +85,23 @@ func simulate(game *engine.Game) {
 
 func main() {
 	ode.Init(0, ode.AllAFlag)
-	
-	game := engine.NewGame()
+
+	server := NewServer()
+
 	sh, err := loadShip("configs/ships/resolution-of-dawn.yaml")
 	if err != nil {
 		log.Fatalf("failed to load ship file: %v", err)
 	}
 	log.Printf("Loaded ship %v", sh)
-	game.AddShip(sh)
+	server.Game.AddShip(sh)
 
-	
-	simulate(game)
-	
 	log.Printf("Staring server on %v", port)
 	lis, err := net.Listen("tcp", port)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	s := grpc.NewServer()
-	pb.RegisterLobbyServer(s, &server{})
+	pb.RegisterLobbyServer(s, server)
 	// Register reflection service on gRPC server.
 	reflection.Register(s)
 	if err := s.Serve(lis); err != nil {

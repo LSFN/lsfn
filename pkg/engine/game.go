@@ -78,6 +78,19 @@ type Game struct {
 	Ships        []*Ship
 }
 
+func (s Ship) Describe() (*pb.ShipDescription) {
+	sensorDescriptions := make([]*pb.SensorDescription, len(s.Sensors))
+	for i, sensor := range s.Sensors {
+		sensorDescriptions[i] = sensor.Describe()
+	}
+	
+	return &pb.ShipDescription{
+		Id: "0",
+		Name: s.Description.Name,
+		Sensors: sensorDescriptions,
+	}
+}
+
 func NewGame() *Game {
 	g := Game{}
 	g.PhysicsWorld = ode.NewWorld()
