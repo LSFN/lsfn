@@ -69,8 +69,9 @@ func simulate(game *engine.Game) {
 	for {
 		game.PhysicsWorld.Step(0.1)
 		for _, ship := range game.Ships {
-			for _, part := range ship.Parts {
-				part.Step(ship)
+			for _, sensor := range ship.Sensors {
+				sensor.Update(ship)
+				log.Printf("Sensor says %v", sensor.Read())
 			}
 		}
 	}
